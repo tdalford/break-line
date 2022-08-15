@@ -2,9 +2,17 @@ This package adds line breaking functionality for python and julia.
 
 This has not been tested on other languages but should theoretically work with
 similar arg separation and function call/brace syntax. You can also modify the
-=break-line-opening-delim=regex= and =break-line-arg-sep=regex= vars as you
+=break-line-opening-delim-regex= and =break-line-arg-sep-regex= vars as you
 wish to encompass more styles.
 
+The package currently breaks the line via one of three styles defined in
+=break-line-functions=. To modify the call order or default line breaker, just
+modify that list. You can also add your own line styles to the list should you
+see fit.
+
+The line should break as long as your cursor is positioned on the line and the
+line you wish to break has been folden to reside on only a single line.
+
 See https://github.com/IvanMalison/multi-line for another more mature
-line-breaking package, but it did not work quite the way I wanted for the
-languages I primarily work with.
+line-breaking package, but it did not work the way I wanted for the languages I
+primarily work with.
