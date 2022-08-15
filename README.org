@@ -1,0 +1,10 @@
+This package adds line breaking functionality for python and julia.
+
+This has not been tested on other languages but should theoretically work with
+similar arg separation and function call/brace syntax. You can also modify the
+=break-line-opening-delim=regex= and =break-line-arg-sep=regex= vars as you
+wish to encompass more styles.
+
+See https://github.com/IvanMalison/multi-line for another more mature
+line-breaking package, but it did not work quite the way I wanted for the
+languages I primarily work with.
