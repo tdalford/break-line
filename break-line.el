@@ -130,10 +130,5 @@ index according to the value of FUNC-INDEX."
   (save-excursion
   (eval (cdr (nth (or func-index 0) break-line-functions)))))
 
-;; (map! :n "M-d" #'break-line-opening-delimiter)
-;; (map! :n "M-c" #'break-line-arg-sep)
-;; (map! :n "M-n" #'break-line-cycle)
-;; (map! :n "SPC l" #'break-line-cycle)
-
 (provide 'break-line)
 ;;; break-line.el ends here

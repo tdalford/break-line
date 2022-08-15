@@ -1,3 +1,5 @@
+* break-line
+
 This package adds line breaking functionality for python and julia.
 
 This has not been tested on other languages but should theoretically work with
@@ -11,8 +13,51 @@ modify that list. You can also add your own line styles to the list should you
 see fit.
 
 The line should break as long as your cursor is positioned on the line and the
-line you wish to break has been folden to reside on only a single line.
+line you wish to break is only one line that is longer than =fill-column=
+characters.
 
 See https://github.com/IvanMalison/multi-line for another more mature
 line-breaking package, but it did not work the way I wanted for the languages I
 primarily work with.
+
+* Examples
+
+#+BEGIN_SRC jupyter-python
+# starting long line function defintion
+def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11):
+    return
+
+# breaks to this as default (when calling break-line-cycle)
+def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(
+        test1, test2, test3, test4, test5, test6, test7, test8, test9, test10,
+        test11):
+    return
+
+# can also break to (call break-line-cycle 1)
+def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(test1, test2, test3, test4,
+                                                    test5, test6, test7, test8,
+                                                    test9, test10, test11):
+    return
+#+END_SRC
+
+
+#+BEGIN_SRC jupyter-julia
+# starting long line function call
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([norm_freq], a_vals[1], b_val), color="purple", alpha=line_alpha; plot_kwargs...)
+
+# After calling break-line-cycle:
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([
+    norm_freq], a_vals[1], b_val), color="purple", alpha=line_alpha;
+     plot_kwargs...)
+
+# After calling break-line-cycle 1:
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1],
+                               b_val) ./ ndf_correction([norm_freq], a_vals[1],
+                                                        b_val), color="purple",
+     alpha=line_alpha; plot_kwargs...)
+
+# After calling break-line-cycle 2:
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([
+    norm_freq], a_vals[
+        1], b_val), color="purple", alpha=line_alpha; plot_kwargs...)
+#+END_SRC
