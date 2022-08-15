@@ -44,7 +44,7 @@ indent the first line from an opening delim with the 'add 4 spaces' style and
 any remaining lines by an argument separator break style. I find this a good
 balance between readability keeping lines pretty full:
 
-#+BEGIN_SRC jupyter-python
+#+BEGIN_SRC python
 # After calling break-line with no prefix (break-line-1)
 def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(
         test1, test2, test3, test4, test5, test6, test7, test8, test9, test10,
