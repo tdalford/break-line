@@ -35,9 +35,9 @@ Per PEP-8 coding standards, we can either:
 1. Break from an argument separator and align the line break to the opening
    delimiter
 
-2. Break from an opening delimiter and align the code either 4 spaces from an
-   initial delimiter or an extra 4 spaces from a function definition to
-   distinguish function arguments from other code.
+2. Break from an opening delimiter and align the code either 4 spaces from the
+   initial call or an extra 4 spaces from a function definition to distinguish
+   function arguments from other code.
 
 By default, running =break-line= will call =break-line-1=, which chooses to
 indent the first line from an opening delim with the 'add 4 spaces' style and
