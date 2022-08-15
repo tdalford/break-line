@@ -21,8 +21,9 @@ line-breaking package, but it did not work the way I wanted for the languages I
 primarily work with.
 
 * Examples
+** Python
 
-#+BEGIN_SRC jupyter-python
+#+BEGIN_SRC python
 # starting long line function defintion
 def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11):
     return
@@ -40,8 +41,9 @@ def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(test1, test2, test3, test4,
     return
 #+END_SRC
 
+** Julia
 
-#+BEGIN_SRC jupyter-julia
+#+BEGIN_SRC julia
 # starting long line function call
 plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([norm_freq], a_vals[1], b_val), color="purple", alpha=line_alpha; plot_kwargs...)
 
