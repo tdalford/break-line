@@ -7,10 +7,10 @@ similar arg separation and function call/brace syntax. You can also modify the
 =break-line-opening-delim-regex= and =break-line-arg-sep-regex= vars as you
 wish to encompass more styles.
 
-The package currently breaks the line via one of three styles defined in
-=break-line-functions=. To modify the call order or default line breaker, just
-modify that list. You can also add your own line styles to the list should you
-see fit.
+The package currently breaks the line using the command =break-line= via one of
+three styles defined in =break-line-functions=. To modify the call order or
+default line breaker, just modify that list. You can also add your own line
+styles to the list should you see fit.
 
 The line should break as long as your cursor is positioned on the line and the
 line you wish to break is only one line that is longer than =fill-column=
@@ -23,43 +23,104 @@ primarily work with.
 * Examples
 ** Python
 
+Let's assume we have some really long function definition we want to break:
+
 #+BEGIN_SRC python
-# starting long line function defintion
 def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11):
     return
+#+END_SRC
 
-# breaks to this as default (when calling break-line-cycle)
+Per PEP-8 coding standards, we can either:
+
+1. Break from an argument separator and align the line break to the opening
+   delimiter
+
+2. Break from an opening delimiter and align the code either 4 spaces from an
+   initial delimiter or an extra 4 spaces from a function definition to
+   distinguish function arguments from other code.
+
+By default, running =break-line= will call =break-line-1=, which chooses to
+indent the first line from an opening delim with the 'add 4 spaces' style and
+any remaining lines by an argument separator break style. I find this a good
+balance between readability keeping lines pretty full:
+
+#+BEGIN_SRC jupyter-python
+# After calling break-line with no prefix (break-line-1)
 def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(
         test1, test2, test3, test4, test5, test6, test7, test8, test9, test10,
         test11):
-    return
+#+END_SRC
 
-# can also break to (call break-line-cycle 1)
+However, running =break=line= with prefix =1= calls =break-line-2= which breaks
+via argument separators by aligning with the (closest) opening delimiter:
+
+#+BEGIN_SRC python
+# After calling break-line with prefix 1 (break-line-2)
 def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(test1, test2, test3, test4,
                                                     test5, test6, test7, test8,
                                                     test9, test10, test11):
-    return
 #+END_SRC
+
+Finally, =break-line-3= will always break lines only via the closest open
+delimiter, unless we must break via argument separators.
+
+#+BEGIN_SRC python
+# After calling break-line with prefix 2 (break-line-3)
+def lonnnnnnnnnnnnnnnnnnnnnnnnnnnnnggggggggggg_func(
+        test1, test2, test3, test4, test5, test6, test7, test8, test9, test10,
+        test11):
+#+END_SRC
+
+This behavior is the same as in =break-line-1= since the second line has no
+opening delimiter to align with, thus resorting to breaking via argument
+separators.
 
 ** Julia
 
-#+BEGIN_SRC julia
-# starting long line function call
-plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([norm_freq], a_vals[1], b_val), color="purple", alpha=line_alpha; plot_kwargs...)
+The line breaking behavior remains the same in Julia, except that =;= is also
+included as an argument separator to break lines with.
 
-# After calling break-line-cycle:
-plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([
+This time let's look at a long function call:
+
+#+BEGIN_SRC julia
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ correction([norm_freq], a_vals[1], b_val), color="purple", alpha=line_alpha; plot_kwargs...)
+#+END_SRC
+
+Calling =break-line=, the first line is broken by indenting 4 spaces from the
+function call delim while the second line is broken by aligning function args
+with the =plot(= call.
+
+#+BEGIN_SRC julia
+# After calling break-line:
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ correction([
     norm_freq], a_vals[1], b_val), color="purple", alpha=line_alpha;
      plot_kwargs...)
+#+END_SRC
 
-# After calling break-line-cycle 1:
+Now =break-line-2= will be a little messier, aligning the first line with the
+closest opening delimiter after =ndf_correction=, breaking the second by
+aligning with another =correction= delim, and breaking the last by aligning
+with the opening =plot(= call.
+
+#+BEGIN_SRC julia
+# After calling break-line 1 (break-line-2):
 plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1],
-                               b_val) ./ ndf_correction([norm_freq], a_vals[1],
-                                                        b_val), color="purple",
+                               b_val) ./ correction([norm_freq], a_vals[1],
+                                                    b_val), color="purple",
      alpha=line_alpha; plot_kwargs...)
+#+END_SRC
 
-# After calling break-line-cycle 2:
-plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ ndf_correction([
+=break-line-3= will break the first line the same as =break-line-1= while
+remaining lines are also broken by indenting after an open delim.
+
+#+BEGIN_SRC julia
+# After calling break-line 2 (break-line-3):
+plot(ndf_freqs, ndf_correction(ndf_freqs, a_vals[1], b_val) ./ correction([
     norm_freq], a_vals[
         1], b_val), color="purple", alpha=line_alpha; plot_kwargs...)
 #+END_SRC
+
+If all =break-line= behaviors do not fit your current desires, you can map
+additional keys to the individual functions =break-line-opening-delimiter= and
+=break-line-arg-sep= for one-time line breaking usage (will stop after the
+first break).

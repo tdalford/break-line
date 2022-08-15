@@ -122,7 +122,7 @@ there. Conforms to https://peps.python.org/pep-0008/#indentation"
   "Contains various line breaking functions which can be called.
 Calls to break-line-cycle will call the function at a given index.")
 
-(defun break-line-cycle (func-index)
+(defun break-line (func-index)
   "Break line using FUNC-INDEX indexed function in break-line-functions.
 If FUNC-INDEX is not provided, choose the first option, otherwise
 index according to the value of FUNC-INDEX."
